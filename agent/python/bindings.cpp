@@ -19,6 +19,7 @@
 #include <pybind11/stl.h>  // conversions std::vector<...> et std::optional<...>
 
 #include "book.h"
+#include "filemanager.h"
 #include "library.h"
 #include "user.h"
 
@@ -134,4 +135,19 @@ PYBIND11_MODULE(bibliotheque_core, m) {
         .def("get_total_books", &Library::getTotalBooks)
         .def("get_available_book_count", &Library::getAvailableBookCount)
         .def("get_checked_out_book_count", &Library::getCheckedOutBookCount);
+
+    // --- FileManager (persistance : lecture/ecriture de books.txt et users.txt) ---
+    // FileManager ne possede rien : il lit/ecrit des fichiers pour une Library
+    // passee en argument, donc aucun probleme de propriete memoire ici.
+    py::class_<FileManager>(m, "FileManager")
+        .def(py::init<const std::string&, const std::string&>(),
+             py::arg("books_file"), py::arg("users_file"))
+        .def("save_library_data", &FileManager::saveLibraryData, py::arg("library"))
+        .def("load_library_data", &FileManager::loadLibraryData, py::arg("library"))
+        .def("save_books_to_file", &FileManager::saveBooksToFile, py::arg("library"))
+        .def("save_users_to_file", &FileManager::saveUsersToFile, py::arg("library"))
+        .def("load_books_from_file", &FileManager::loadBooksFromFile, py::arg("library"))
+        .def("load_users_from_file", &FileManager::loadUsersFromFile, py::arg("library"))
+        .def("file_exists", &FileManager::fileExists, py::arg("filename"))
+        .def("create_backup", &FileManager::createBackup);
 }

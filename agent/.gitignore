@@ -1,1 +1,4 @@
 build/*
+data_copie/
+__pycache__/
+*.pyc

@@ -6,14 +6,16 @@
 		"dockerfile": "Dockerfile"
 	},
 	
-// Monter le socket X11 hôte dans le conteneur
+// Monter le socket X11 hote + le cookie d'authentification dans le conteneur
   "mounts": [
-    "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind"
+    "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind",
+    "source=${localEnv:HOME}/.Xauthority,target=/tmp/.Xauthority,type=bind"
   ],
   
-  // Transmettre la variable d'affichage
+  // Transmettre l'affichage et le cookie X11
   "containerEnv": {
-    "DISPLAY": "${localEnv:DISPLAY}"
+    "DISPLAY": "${localEnv:DISPLAY}",
+    "XAUTHORITY": "/tmp/.Xauthority"
   },
   
   // Donner l'accès au serveur X11 (si nécessaire sur certains systèmes)

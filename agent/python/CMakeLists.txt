@@ -22,6 +22,7 @@ pybind11_add_module(bibliotheque_core
     ${CMAKE_CURRENT_SOURCE_DIR}/../book.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../user.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../library.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../filemanager.cpp
 )
 
 # bindings.cpp inclut les en-tetes du projet (book.h, user.h, library.h).
